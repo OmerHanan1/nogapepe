@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <title>Noga &amp; Pepe are getting married!</title>
+    <meta
+      name="description"
+      content="Pick a card to celebrate Noga and Pepe's wedding."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <span class="eyebrow">A little wedding game</span>
+        <h1>Noga <span aria-hidden="true">&amp;</span> Pepe are getting married!</h1>
+        <p>Tap the deck and let fate pick a card for you.</p>
+      </header>
+
+      <button class="deck-button" id="pick-card" type="button" aria-label="Pick a random card">
+        <span class="deck" aria-hidden="true">
+          <span class="card-back card-back--third"></span>
+          <span class="card-back card-back--second"></span>
+          <span class="card-back card-back--top">
+            <span class="card-heart">♥</span>
+            <span class="card-monogram">N <small>&amp;</small> P</span>
+            <span class="card-heart card-heart--bottom">♥</span>
+          </span>
+        </span>
+        <span class="pick-label">Pick a card</span>
+      </button>
+
+      <p class="footer-note">Made with love for the happy couple <span aria-hidden="true">♥</span></p>
+    </main>
+
+    <dialog class="card-dialog" id="card-dialog" aria-label="Your random card">
+      <div class="dialog-content">
+        <button class="close-button" id="close-card" type="button" aria-label="Close card">×</button>
+        <img id="card-image" alt="A randomly selected wedding game card" />
+      </div>
+    </dialog>
+  </body>
+</html>
