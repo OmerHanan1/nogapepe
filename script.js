@@ -7,6 +7,7 @@ const discoveryCount = document.querySelector("#discovery-count");
 const progressTrack = document.querySelector(".progress-track");
 const progressFill = document.querySelector("#progress-fill");
 const resetButton = document.querySelector("#reset-discovery");
+const pickLabel = document.querySelector(".pick-label");
 
 const storedCards = localStorage.getItem("nogapepe-discovered-cards");
 const discoveredCards = new Set(
@@ -14,17 +15,19 @@ const discoveredCards = new Set(
     .map(Number)
     .filter((cardNumber) => Number.isInteger(cardNumber) && cardNumber >= 1 && cardNumber <= CARD_COUNT),
 );
-let previousCard = 0;
 
 function updateDiscoveryProgress() {
   const discoveredCount = discoveredCards.size;
   const percentage = (discoveredCount / CARD_COUNT) * 100;
   const cardLabel = discoveredCount === 1 ? "card" : "cards";
+  const allCardsDiscovered = discoveredCount === CARD_COUNT;
 
   discoveryCount.textContent = `Discovered ${discoveredCount} of ${CARD_COUNT} ${cardLabel}`;
   progressTrack.setAttribute("aria-valuenow", String(discoveredCount));
   progressFill.style.width = `${percentage}%`;
   resetButton.disabled = discoveredCount === 0;
+  pickButton.disabled = allCardsDiscovered;
+  pickLabel.textContent = allCardsDiscovered ? "All cards discovered" : "Pick a card";
 }
 
 function rememberCard(cardNumber) {
@@ -34,13 +37,17 @@ function rememberCard(cardNumber) {
 }
 
 function pickRandomCard() {
-  let cardNumber;
+  const remainingCards = Array.from(
+    { length: CARD_COUNT },
+    (_, index) => index + 1,
+  ).filter((cardNumber) => !discoveredCards.has(cardNumber));
 
-  do {
-    cardNumber = Math.floor(Math.random() * CARD_COUNT) + 1;
-  } while (CARD_COUNT > 1 && cardNumber === previousCard);
+  if (remainingCards.length === 0) {
+    updateDiscoveryProgress();
+    return;
+  }
 
-  previousCard = cardNumber;
+  const cardNumber = remainingCards[Math.floor(Math.random() * remainingCards.length)];
   rememberCard(cardNumber);
   cardImage.src = `assets/cards/card-${String(cardNumber).padStart(2, "0")}.jpg`;
   cardImage.alt = `Random wedding card ${cardNumber} of ${CARD_COUNT}`;

@@ -137,7 +137,7 @@ h1 span,
   transition: transform 180ms ease;
 }
 
-.deck-button:hover .deck,
+.deck-button:hover:not(:disabled) .deck,
 .deck-button:focus-visible .deck {
   transform: translateY(-8px) rotate(-1deg);
 }
@@ -230,9 +230,23 @@ h1 span,
     transform 160ms ease;
 }
 
-.deck-button:hover .pick-label {
+.deck-button:hover:not(:disabled) .pick-label {
   background: var(--cp-accent-hover);
   transform: scale(1.03);
+}
+
+.deck-button:disabled {
+  cursor: default;
+}
+
+.deck-button:disabled .deck {
+  opacity: 0.62;
+}
+
+.deck-button:disabled .pick-label {
+  border-color: var(--cp-border-strong);
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
 }
 
 .discovery {
