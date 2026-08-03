@@ -40,6 +40,23 @@
         <span class="pick-label">Pick a card</span>
       </button>
 
+      <section class="discovery" aria-label="Card discovery progress">
+        <div class="discovery-summary">
+          <p id="discovery-count" aria-live="polite">Discovered 0 of 19 cards</p>
+          <button id="reset-discovery" type="button" disabled>Start over</button>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="Cards discovered"
+          aria-valuemin="0"
+          aria-valuemax="19"
+          aria-valuenow="0"
+        >
+          <span id="progress-fill"></span>
+        </div>
+      </section>
+
       <p class="footer-note">Made with love for the happy couple <span aria-hidden="true">♥</span></p>
     </main>
 
